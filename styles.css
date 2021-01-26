@@ -1,0 +1,108 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1rem;
+  color: #33332a;
+  background-color: #202225;
+}
+
+.game {
+  width: 70rem;
+  margin: 1rem auto 1rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.card {
+  color: #b7babd;
+  text-align: center;
+  background-color: #36393f;
+  border: 1px solid #000000;
+  text-transform: uppercase;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.5rem;
+  cursor: pointer;
+  height: 9rem;
+  line-height: 9rem;
+  white-space: nowrap;
+  background-size: contain;
+}
+
+h1 {
+  color: #b7babd;
+  font-size: 7.33rem;
+  margin-top: -1.5rem;
+  margin-left: -0.55rem;
+}
+
+.red {
+  color: #b7babd;
+}
+.blue {
+  color: #b7babd;
+}
+.white {
+  color: #b7babd;
+}
+.black {
+  color: #b7babd;
+}
+
+.redSpy {
+  background-image: radial-gradient(#c73535, #722020);
+  color: white;
+}
+.blueSpy {
+  background-image: radial-gradient(#3f77da, #254885);
+  color: white;
+}
+.whiteSpy {
+  background-image: radial-gradient(#ffffff, #c0c0c0);
+  color: #505050;
+}
+.blackSpy {
+  background-image: radial-gradient(#333333, #000000);
+  color: #c7c7c7;
+}
+
+.redDown0 {
+  background-image: url("res/red0.png");
+  color: rgba(255, 255, 255, 0);
+}
+.redDown1 {
+  background-image: url("res/red1.png");
+  color: rgba(255, 255, 255, 0);
+}
+.blueDown0 {
+  background-image: url("res/blue0.png");
+  color: rgba(255, 255, 255, 0);
+}
+.blueDown1 {
+  background-image: url("res/blue1.png");
+  color: rgba(255, 255, 255, 0);
+}
+.whiteDown0 {
+  background-image: url("res/white0.png");
+  color: rgba(255, 255, 255, 0);
+}
+.whiteDown1 {
+  background-image: url("res/white1.png");
+  color: rgba(255, 255, 255, 0);
+}
+.blackDown0 {
+  background-image: url("res/black1.png");
+  color: rgba(255, 255, 255, 0);
+}
