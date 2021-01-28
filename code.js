@@ -1,24 +1,51 @@
 const cards = document.getElementsByClassName("card");
 
 let language = "nederlands";
-let spymaster = true;
+let spymaster = false;
+let male = false
+
+let seed = prompt("Input game seed plz")
 
 /* 
-0  = blank
-1  = red
-2  = blue
-3  = white
-4  = black
-5  = redSpy
-6  = blueSpy
-7  = whiteSpy
-8  = blackSpy
-9  = redDown
-10 = blueDown
-11 = whiteDown
-12 = blackDown
+0  = red
+1  = blue
+2  = white
+3  = black
+4  = redDown
+5  = blueDown
+6  = whiteDown
+7  = blackDown
+8  = guessed
 */
 let boardState = [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+];
+
+let guessedCards = [
   0,
   0,
   0,
@@ -50,58 +77,64 @@ let scoreRed;
 let scoreBlue;
 
 var colors0 = [
-  "1",
-  "1",
-  "1",
-  "1",
-  "1",
-  "1",
-  "1",
-  "1",
-  "1",
-  "2",
-  "2",
-  "2",
-  "2",
-  "2",
-  "2",
-  "2",
-  "2",
-  "3",
-  "3",
-  "3",
-  "3",
-  "3",
-  "3",
-  "3",
-  "4",
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+
+  2,
+  2,
+  2,
+  2,
+  2,
+  2,
+  2,
+
+  3,
 ];
 var colors1 = [
-  "1",
-  "1",
-  "1",
-  "1",
-  "1",
-  "1",
-  "1",
-  "1",
-  "2",
-  "2",
-  "2",
-  "2",
-  "2",
-  "2",
-  "2",
-  "2",
-  "2",
-  "3",
-  "3",
-  "3",
-  "3",
-  "3",
-  "3",
-  "3",
-  "4",
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+
+  2,
+  2,
+  2,
+  2,
+  2,
+  2,
+  2,
+
+  3,
 ];
 var colors;
 
@@ -717,6 +750,7 @@ function setup(seed) {
 
 function render(boardState) {
   setCardClasses(boardState, spymaster);
+  console.log(boardState);
 }
 
 function setWords(seed) {
@@ -750,20 +784,74 @@ function initBoardState(seed) {
 function setCardClasses(boardState, spymaster) {
   if (spymaster) {
     for (let i = 0; i < cards.length; i++) {
-      if (boardState[i] == 1) {
+      if (boardState[i] == 0) {
         cards[i].classList.add("redSpy");
-      } else if (boardState[i] == 2) {
+      } else if (boardState[i] == 1) {
         cards[i].classList.add("blueSpy");
-      } else if (boardState[i] == 3) {
+      } else if (boardState[i] == 2) {
         cards[i].classList.add("whiteSpy");
-      } else if (boardState[i] == 4) {
+      } else if (boardState[i] == 3) {
         cards[i].classList.add("blackSpy");
       }
     }
   }
+
+  if (!male) {
+    for (let i = 0; i < cards.length; i++) {
+      if (boardState[i] == 4 && !cards[i].classList.contains("down")) {
+        cards[i].classList.add("redDown0", "down");
+
+      } else if (boardState[i] == 5 && !cards[i].classList.contains("down")) {
+        cards[i].classList.add("blueDown0", "down");
+
+      } else if (boardState[i] == 6 && !cards[i].classList.contains("down")) {
+        cards[i].classList.add("whiteDown0", "down");
+
+      } else if (boardState[i] == 7 && !cards[i].classList.contains("down")) {
+        cards[i].classList.add("blackDown0", "down");
+
+      }
+    }
+  }
+
+  if (male) {
+    for (let i = 0; i < cards.length; i++) {
+      if (boardState[i] == 4 && !cards[i].classList.contains("down")) {
+        cards[i].classList.add("redDown1", "down");
+
+      } else if (boardState[i] == 5 && !cards[i].classList.contains("down")) {
+        cards[i].classList.add("blueDown1", "down");
+
+      } else if (boardState[i] == 6 && !cards[i].classList.contains("down")) {
+        cards[i].classList.add("whiteDown1", "down");
+
+      } else if (boardState[i] == 7 && !cards[i].classList.contains("down")) {
+        cards[i].classList.add("blackDown1", "down");
+
+      }
+    }
+  }
+  male = !male
 }
 
-// shuffle an array using seed
+document.addEventListener('click', function (click) {
+  if (click.target == document.getElementById("spySwitch")) {
+    spymaster = !spymaster
+  }
+  if (click.target.classList.contains("card")) {
+    if (boardState[click.target.id.substring(4)] == 0) {
+      boardState[click.target.id.substring(4)] = 4
+    } else if (boardState[click.target.id.substring(4)] == 1) {
+      boardState[click.target.id.substring(4)] = 5
+    } else if (boardState[click.target.id.substring(4)] == 2) {
+      boardState[click.target.id.substring(4)] = 6
+    } else if (boardState[click.target.id.substring(4)] == 3) {
+      boardState[click.target.id.substring(4)] = 7
+    }
+  }
+  render(boardState)
+});
+
 function shuffle(array, seed) {
   var currentIndex = array.length,
     temporaryValue,
@@ -785,5 +873,5 @@ function shuffle(array, seed) {
   return array;
 }
 
-setup(1);
+setup(seed);
 render(boardState);

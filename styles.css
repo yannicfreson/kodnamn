@@ -27,7 +27,7 @@ body {
 }
 
 .card {
-  color: #b7babd;
+  color: #b9bbbe;
   text-align: center;
   background-color: #36393f;
   border: 1px solid #000000;
@@ -39,26 +39,27 @@ body {
   line-height: 9rem;
   white-space: nowrap;
   background-size: contain;
+  border-radius: 0.25rem;
 }
 
 h1 {
-  color: #b7babd;
+  color: #b9bbbe;
   font-size: 7.33rem;
   margin-top: -1.5rem;
   margin-left: -0.55rem;
 }
 
 .red {
-  color: #b7babd;
+  color: #b9bbbe;
 }
 .blue {
-  color: #b7babd;
+  color: #b9bbbe;
 }
 .white {
-  color: #b7babd;
+  color: #b9bbbe;
 }
 .black {
-  color: #b7babd;
+  color: #b9bbbe;
 }
 
 .redSpy {
@@ -79,19 +80,19 @@ h1 {
 }
 
 .redDown0 {
-  background-image: url("res/red0.png");
+  background-image: url("./res/red0.png");
   color: rgba(255, 255, 255, 0);
 }
 .redDown1 {
-  background-image: url("res/red1.png");
+  background-image: url("./res/red1.png");
   color: rgba(255, 255, 255, 0);
 }
 .blueDown0 {
-  background-image: url("res/blue0.png");
+  background-image: url("./res/blue0.png");
   color: rgba(255, 255, 255, 0);
 }
 .blueDown1 {
-  background-image: url("res/blue1.png");
+  background-image: url("./res/blue1.png");
   color: rgba(255, 255, 255, 0);
 }
 .whiteDown0 {
@@ -105,4 +106,11 @@ h1 {
 .blackDown0 {
   background-image: url("res/black1.png");
   color: rgba(255, 255, 255, 0);
+}
+
+#spySwitch {
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid #000000;
+  background-color: #b9bbbe;
 }
