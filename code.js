@@ -76,7 +76,7 @@ let guessedCards = [
 let scoreRed;
 let scoreBlue;
 
-var colors0 = [
+let colors0 = [
   0,
   0,
   0,
@@ -106,7 +106,7 @@ var colors0 = [
 
   3,
 ];
-var colors1 = [
+let colors1 = [
   0,
   0,
   0,
@@ -136,9 +136,9 @@ var colors1 = [
 
   3,
 ];
-var colors;
+let colors;
 
-var wordsEng = [
+let wordsEng = [
   "africa",
   "agent",
   "air",
@@ -326,7 +326,7 @@ var wordsEng = [
   "worm",
   "yard",
 ];
-var wordsNed = [
+let wordsNed = [
   "defenestratie",
   "tondeuse",
   "bladgoud",
@@ -838,6 +838,7 @@ document.addEventListener('click', function (click) {
   if (click.target == document.getElementById("spySwitch")) {
     spymaster = !spymaster
   }
+  
   if (click.target.classList.contains("card")) {
     if (boardState[click.target.id.substring(4)] == 0) {
       boardState[click.target.id.substring(4)] = 4
