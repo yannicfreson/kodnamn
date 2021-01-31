@@ -9,7 +9,7 @@ function getSeed() {
   let seed;
   const params = new URLSearchParams(window.location.href);
   if (!params.has('seed')) {
-    seed = prompt("Gib game id plz")
+    seed = Math.floor(Math.random() * 1000000) + 1
     params.append("seed", seed)
     window.history.replaceState({}, '', '/?' + params);
   } else {
@@ -306,7 +306,6 @@ let wordsNed = [
   "bladgoud",
   "kurk",
   "preparee",
-  "teleurstelling",
   "ambtenaar",
   "frietchinees",
   "fotoshoot",
@@ -792,7 +791,7 @@ function setCardClasses(boardState, spymaster) {
     }
   }
 
-  if (!male) {
+  if (male) {
     for (let i = 0; i < cards.length; i++) {
       if ((boardState.cardValue[i] == 4 && !cards[i].classList.contains("down")) || 
       (boardState.cardValue[i] == 0 && boardState.guessedCards[i] == 1)) {

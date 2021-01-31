@@ -15,7 +15,7 @@ body {
 }
 
 .game {
-  width: 70rem;
+  max-width: 70rem;
   margin: 1rem auto 1rem;
 }
 
