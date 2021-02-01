@@ -6,6 +6,7 @@ let spymaster = false;
 let male = false;
 
 let seed;
+let joined;
 
 /* 
 0  = red
@@ -750,6 +751,7 @@ function setup(seed) {
 
 function render(boardState) {
   setCardClasses(boardState, spymaster);
+  console.table(boardState);
   updateDatabase(seed);
 }
 
@@ -759,6 +761,7 @@ function getSeed() {
   if (params.has("seed")) {
     seed = params.get("seed");
     console.log("Got seed from url");
+    joined = true;
   } else if (!params.has("seed")) {
     seed = Math.floor(Math.random() * 1000000) + 1;
     const newURL = new URL(window.location.href);
@@ -794,7 +797,9 @@ function initBoardState(seed) {
   for (i = 0; i < cards.length; i++) {
     boardState.cardValue[i] = shuffledColors[i];
   }
-  updateDatabase(seed);
+  if (!joined) {
+    updateDatabase(seed);
+  }
 }
 
 function updateDatabase(seed) {
@@ -818,6 +823,8 @@ function setCardClasses(boardState, spymaster) {
       }
     }
   }
+
+  male = Math.round(Math.random()) === 0;
 
   if (!male) {
     for (let i = 0; i < cards.length; i++) {
@@ -874,11 +881,10 @@ function setCardClasses(boardState, spymaster) {
           !cards[i].classList.contains("down")) ||
         (boardState.cardValue[i] == 3 && boardState.guessedCards[i] == 1)
       ) {
-        cards[i].classList.add("blackDown1", "down");
+        cards[i].classList.add("blackDown0", "down");
       }
     }
   }
-  male = !male;
 }
 
 document.addEventListener("click", function (click) {
@@ -932,7 +938,7 @@ getSeed();
 setup(seed);
 render(boardState);
 
-/* dbRefGames.on("value", (snap) => {
-  boardState = snap.child(seed + "/boardstate").val();
-  render();
-}); */
+dbRefGames.on("value", (snap) => {
+  boardState = snap.child(seed + "/boardState").val();
+  render(boardState);
+});

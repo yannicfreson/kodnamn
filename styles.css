@@ -114,3 +114,32 @@ h1 {
   border: 1px solid #000000;
   background-color: #b9bbbe;
 }
+
+.preloadImages0 {
+  display: none;
+  background-image: url("res/red0.png");
+}
+.preloadImages1 {
+  display: none;
+  background-image: url("res/red1.png");
+}
+.preloadImages2 {
+  display: none;
+  background-image: url("res/blue0.png");
+}
+.preloadImages3 {
+  display: none;
+  background-image: url("res/blue1.png");
+}
+.preloadImages4 {
+  display: none;
+  background-image: url("res/white0.png");
+}
+.preloadImages5 {
+  display: none;
+  background-image: url("res/white1.png");
+}
+.preloadImages6 {
+  display: none;
+  background-image: url("res/black1.png");
+}
