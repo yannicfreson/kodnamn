@@ -1,23 +1,11 @@
 const cards = document.getElementsByClassName("card");
+const dbRefGames = firebase.database().ref().child("games");
 
 let language = "nederlands";
 let spymaster = false;
-let male = false
+let male = false;
 
 let seed;
-
-function getSeed() {
-  let url = new URL(window.location.href);
-  let params = new URLSearchParams(url.search);
-  if (params.has('seed')) {
-    seed = params.get('seed')
-  } else if (!params.has('seed')) {
-    seed = Math.floor(Math.random() * 1000000) + 1
-    const newURL = new URL(window.location.href);
-    newURL.searchParams.set("seed", seed);
-    window.location.replace(newURL)
-  } 
-}
 
 /* 
 0  = red
@@ -30,8 +18,60 @@ function getSeed() {
 7  = blackDown
 */
 let boardState = {
-  "cardValue":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  "guessedCards":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  cardValue: [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ],
+  guessedCards: [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ],
 };
 
 let scoreRed;
@@ -710,6 +750,22 @@ function setup(seed) {
 
 function render(boardState) {
   setCardClasses(boardState, spymaster);
+  updateDatabase(seed);
+}
+
+function getSeed() {
+  let url = new URL(window.location.href);
+  let params = new URLSearchParams(url.search);
+  if (params.has("seed")) {
+    seed = params.get("seed");
+    console.log("Got seed from url");
+  } else if (!params.has("seed")) {
+    seed = Math.floor(Math.random() * 1000000) + 1;
+    const newURL = new URL(window.location.href);
+    newURL.searchParams.set("seed", seed);
+    window.location.replace(newURL);
+    console.log("Generated seed and changed URL");
+  }
 }
 
 function setWords(seed) {
@@ -738,6 +794,14 @@ function initBoardState(seed) {
   for (i = 0; i < cards.length; i++) {
     boardState.cardValue[i] = shuffledColors[i];
   }
+  updateDatabase(seed);
+}
+
+function updateDatabase(seed) {
+  firebase
+    .database()
+    .ref("games/" + seed)
+    .set({ boardState: boardState });
 }
 
 function setCardClasses(boardState, spymaster) {
@@ -757,71 +821,90 @@ function setCardClasses(boardState, spymaster) {
 
   if (!male) {
     for (let i = 0; i < cards.length; i++) {
-      if ((boardState.cardValue[i] == 4 && !cards[i].classList.contains("down")) || 
-      (boardState.cardValue[i] == 0 && boardState.guessedCards[i] == 1)) {
+      if (
+        (boardState.cardValue[i] == 4 &&
+          !cards[i].classList.contains("down")) ||
+        (boardState.cardValue[i] == 0 && boardState.guessedCards[i] == 1)
+      ) {
         cards[i].classList.add("redDown0", "down");
-
-      } else if ((boardState.cardValue[i] == 5 && !cards[i].classList.contains("down")) || 
-      (boardState.cardValue[i] == 1 && boardState.guessedCards[i] == 1)) {
+      } else if (
+        (boardState.cardValue[i] == 5 &&
+          !cards[i].classList.contains("down")) ||
+        (boardState.cardValue[i] == 1 && boardState.guessedCards[i] == 1)
+      ) {
         cards[i].classList.add("blueDown0", "down");
-
-      } else if ((boardState.cardValue[i] == 6 && !cards[i].classList.contains("down")) || 
-      (boardState.cardValue[i] == 2 && boardState.guessedCards[i] == 1)) {
+      } else if (
+        (boardState.cardValue[i] == 6 &&
+          !cards[i].classList.contains("down")) ||
+        (boardState.cardValue[i] == 2 && boardState.guessedCards[i] == 1)
+      ) {
         cards[i].classList.add("whiteDown0", "down");
-
-      } else if ((boardState.cardValue[i] == 7 && !cards[i].classList.contains("down")) || 
-      (boardState.cardValue[i] == 3 && boardState.guessedCards[i] == 1)) {
+      } else if (
+        (boardState.cardValue[i] == 7 &&
+          !cards[i].classList.contains("down")) ||
+        (boardState.cardValue[i] == 3 && boardState.guessedCards[i] == 1)
+      ) {
         cards[i].classList.add("blackDown0", "down");
-
       }
     }
   }
 
   if (male) {
     for (let i = 0; i < cards.length; i++) {
-      if ((boardState.cardValue[i] == 4 && !cards[i].classList.contains("down")) || 
-      (boardState.cardValue[i] == 0 && boardState.guessedCards[i] == 1)) {
+      if (
+        (boardState.cardValue[i] == 4 &&
+          !cards[i].classList.contains("down")) ||
+        (boardState.cardValue[i] == 0 && boardState.guessedCards[i] == 1)
+      ) {
         cards[i].classList.add("redDown1", "down");
-
-      } else if ((boardState.cardValue[i] == 5 && !cards[i].classList.contains("down")) || 
-      (boardState.cardValue[i] == 1 && boardState.guessedCards[i] == 1)) {
+      } else if (
+        (boardState.cardValue[i] == 5 &&
+          !cards[i].classList.contains("down")) ||
+        (boardState.cardValue[i] == 1 && boardState.guessedCards[i] == 1)
+      ) {
         cards[i].classList.add("blueDown1", "down");
-
-      } else if ((boardState.cardValue[i] == 6 && !cards[i].classList.contains("down")) || 
-      (boardState.cardValue[i] == 2 && boardState.guessedCards[i] == 1)) {
+      } else if (
+        (boardState.cardValue[i] == 6 &&
+          !cards[i].classList.contains("down")) ||
+        (boardState.cardValue[i] == 2 && boardState.guessedCards[i] == 1)
+      ) {
         cards[i].classList.add("whiteDown1", "down");
-
-      } else if ((boardState.cardValue[i] == 7 && !cards[i].classList.contains("down")) || 
-      (boardState.cardValue[i] == 3 && boardState.guessedCards[i] == 1)) {
+      } else if (
+        (boardState.cardValue[i] == 7 &&
+          !cards[i].classList.contains("down")) ||
+        (boardState.cardValue[i] == 3 && boardState.guessedCards[i] == 1)
+      ) {
         cards[i].classList.add("blackDown1", "down");
-
       }
     }
   }
-  male = !male
+  male = !male;
 }
 
-document.addEventListener('click', function (click) {
-  if (click.target == document.getElementById("spySwitch") && spymaster === false) {
-    spymaster = !spymaster
+document.addEventListener("click", function (click) {
+  if (
+    click.target == document.getElementById("spySwitch") &&
+    spymaster === false
+  ) {
+    spymaster = !spymaster;
   }
-  
+
   if (click.target.classList.contains("card")) {
     if (boardState.cardValue[click.target.id.substring(4)] == 0) {
-      boardState.cardValue[click.target.id.substring(4)] = 4
-      boardState.guessedCards[click.target.id.substring(4)] = 1
+      boardState.cardValue[click.target.id.substring(4)] = 4;
+      boardState.guessedCards[click.target.id.substring(4)] = 1;
     } else if (boardState.cardValue[click.target.id.substring(4)] == 1) {
-      boardState.cardValue[click.target.id.substring(4)] = 5
-      boardState.guessedCards[click.target.id.substring(4)] = 1
+      boardState.cardValue[click.target.id.substring(4)] = 5;
+      boardState.guessedCards[click.target.id.substring(4)] = 1;
     } else if (boardState.cardValue[click.target.id.substring(4)] == 2) {
-      boardState.cardValue[click.target.id.substring(4)] = 6
-      boardState.guessedCards[click.target.id.substring(4)] = 1
+      boardState.cardValue[click.target.id.substring(4)] = 6;
+      boardState.guessedCards[click.target.id.substring(4)] = 1;
     } else if (boardState.cardValue[click.target.id.substring(4)] == 3) {
-      boardState.cardValue[click.target.id.substring(4)] = 7
-      boardState.guessedCards[click.target.id.substring(4)] = 1
+      boardState.cardValue[click.target.id.substring(4)] = 7;
+      boardState.guessedCards[click.target.id.substring(4)] = 1;
     }
   }
-  render(boardState)  
+  render(boardState);
 });
 
 function shuffle(array, seed) {
@@ -845,6 +928,11 @@ function shuffle(array, seed) {
   return array;
 }
 
-getSeed()
+getSeed();
 setup(seed);
 render(boardState);
+
+dbRefGames.on("value", (snap) => {
+  boardState = snap.child(seed + "/boardstate").val();
+  render();
+});
