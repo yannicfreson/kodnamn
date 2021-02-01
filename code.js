@@ -932,7 +932,7 @@ getSeed();
 setup(seed);
 render(boardState);
 
-dbRefGames.on("value", (snap) => {
+/* dbRefGames.on("value", (snap) => {
   boardState = snap.child(seed + "/boardstate").val();
   render();
-});
+}); */
