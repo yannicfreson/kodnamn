@@ -4,20 +4,19 @@ let language = "nederlands";
 let spymaster = false;
 let male = false
 
-function getSeed() {
-  let seed;
-  let params = new URLSearchParams(window.location.href);
+let seed;
 
-  if (!params.has('seed')) {
+function getSeed() {
+  let url = new URL(window.location.href);
+  let params = new URLSearchParams(url.search);
+  if (params.has('seed')) {
+    seed = params.get('seed')
+  } else if (!params.has('seed')) {
     seed = Math.floor(Math.random() * 1000000) + 1
     const newURL = new URL(window.location.href);
-    newURL.searchParams.append("seed", seed);
-    window.location.href = newURL
-  } else if (params.has('seed')) {
-    seed = params.get('seed')
-    alert(seed)
-  }
-  return seed
+    newURL.searchParams.set("seed", seed);
+    window.location.replace(newURL)
+  } 
 }
 
 /* 
@@ -29,7 +28,6 @@ function getSeed() {
 5  = blueDown
 6  = whiteDown
 7  = blackDown
-8  = guessed
 */
 let boardState = {
   "cardValue":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -712,7 +710,6 @@ function setup(seed) {
 
 function render(boardState) {
   setCardClasses(boardState, spymaster);
-  console.table(boardState);
 }
 
 function setWords(seed) {
@@ -848,5 +845,6 @@ function shuffle(array, seed) {
   return array;
 }
 
-setup(getSeed());
+getSeed()
+setup(seed);
 render(boardState);
