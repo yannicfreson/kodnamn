@@ -4,32 +4,21 @@ let language = "nederlands";
 let spymaster = false;
 let male = false
 
-//let seed = prompt("Input game seed plz")
 function getSeed() {
   let seed;
-  const params = new URLSearchParams(window.location.href);
+  let params = new URLSearchParams(window.location.href);
+
   if (!params.has('seed')) {
     seed = Math.floor(Math.random() * 1000000) + 1
-    params.append("seed", seed)
-    window.history.replaceState({}, '', '/?' + params);
-  } else {
+    const newURL = new URL(window.location.href);
+    newURL.searchParams.append("seed", seed);
+    window.location.href = newURL
+  } else if (params.has('seed')) {
     seed = params.get('seed')
+    alert(seed)
   }
   return seed
 }
-
-var getParams = function (url) {
-	var params = {};
-	var parser = document.createElement('a');
-	parser.href = url;
-	var query = parser.search.substring(1);
-	var vars = query.split('&');
-	for (var i = 0; i < vars.length; i++) {
-		var pair = vars[i].split('=');
-		params[pair[0]] = decodeURIComponent(pair[1]);
-	}
-	return params;
-};
 
 /* 
 0  = red
