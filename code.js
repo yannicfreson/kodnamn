@@ -751,8 +751,12 @@ function setup(seed) {
 
 function render(boardState) {
   setCardClasses(boardState, spymaster);
-  console.table(boardState);
-  updateDatabase(seed);
+  if (!joined) {
+    updateDatabase(seed);
+  }
+  if (joined) {
+    joined = false;
+  }
 }
 
 function getSeed() {
@@ -940,5 +944,6 @@ render(boardState);
 
 dbRefGames.on("value", (snap) => {
   boardState = snap.child(seed + "/boardState").val();
+  console.table(boardState);
   render(boardState);
 });
