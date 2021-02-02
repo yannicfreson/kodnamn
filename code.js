@@ -7,7 +7,6 @@ let male = false;
 
 let seed;
 let joined;
-let createdGame;
 
 /* 
 0  = red
@@ -752,12 +751,8 @@ function setup(seed) {
 
 function render(boardState) {
   setCardClasses(boardState, spymaster);
-  if (!joined) {
-    updateDatabase(seed);
-  }
-  if (joined) {
-    joined = false;
-  }
+  console.table(boardState);
+  updateDatabase(seed);
 }
 
 function getSeed() {
@@ -768,7 +763,6 @@ function getSeed() {
     console.log("Got seed from url");
     joined = true;
   } else if (!params.has("seed")) {
-    createdGame = true;
     seed = Math.floor(Math.random() * 1000000) + 1;
     const newURL = new URL(window.location.href);
     newURL.searchParams.set("seed", seed);
@@ -803,9 +797,7 @@ function initBoardState(seed) {
   for (i = 0; i < cards.length; i++) {
     boardState.cardValue[i] = shuffledColors[i];
   }
-  if (!joined || createdGame) {
-    console.log(boardState);
-    console.log("updated database");
+  if (!joined) {
     updateDatabase(seed);
   }
 }
@@ -948,6 +940,5 @@ render(boardState);
 
 dbRefGames.on("value", (snap) => {
   boardState = snap.child(seed + "/boardState").val();
-  console.table(boardState);
   render(boardState);
 });
