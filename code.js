@@ -6,6 +6,7 @@ let spymaster = false;
 let male = false;
 
 let seed;
+let done = false;
 
 /* 
 0  = red
@@ -749,19 +750,28 @@ function setup(seed) {
 }
 
 function render(boardState) {
+  console.log();
   setCardClasses(boardState, spymaster);
-
   updateDatabase(seed);
-
-  console.table(boardState);
 }
 
-function getSeed() {
+async function getSeed() {
+  console.log("1");
   let url = new URL(window.location.href);
   let params = new URLSearchParams(url.search);
   if (params.has("seed")) {
     seed = params.get("seed");
     console.log("Got seed from url");
+    firebase
+      .database()
+      .ref(`games/${seed}`)
+      .once("value", (snapshot) => {
+        if (snapshot.exists()) {
+          boardState = snapshot.val().boardState;
+          console.log(boardState);
+          done = true;
+        }
+      });
   } else if (!params.has("seed")) {
     seed = Math.floor(Math.random() * 1000000000) + 1;
     const newURL = new URL(window.location.href);
@@ -772,6 +782,7 @@ function getSeed() {
 }
 
 function setWords(seed) {
+  console.log("2");
   let shuffledWords;
   if (language.toLowerCase() === "nederlands") {
     shuffledWords = shuffle(wordsNed, seed);
@@ -785,6 +796,7 @@ function setWords(seed) {
 }
 
 function setWhichColors(seed) {
+  console.log("3");
   if (seed % 2 == 0) {
     colors = colors0;
   } else if (seed % 2 != 0) {
@@ -793,13 +805,12 @@ function setWhichColors(seed) {
 }
 
 function initBoardState(seed) {
+  console.log("4");
   let shuffledColors = shuffle(colors, seed);
   for (i = 0; i < cards.length; i++) {
     boardState.cardValue[i] = shuffledColors[i];
   }
-  if (!checkGamePresent()) {
-    updateDatabase(seed);
-  }
+  updateDatabase(seed);
 }
 
 function updateDatabase(seed) {
@@ -810,6 +821,8 @@ function updateDatabase(seed) {
 }
 
 function setCardClasses(boardState, spymaster) {
+  console.log("5");
+  console.table(boardState);
   if (spymaster) {
     for (let i = 0; i < cards.length; i++) {
       if (boardState.cardValue[i] == 0) {
@@ -935,8 +948,10 @@ function shuffle(array, seed) {
 }
 
 getSeed();
-setup(seed);
-render(boardState);
+setTimeout(function () {
+  setup(seed);
+  render(boardState);
+}, 3000);
 
 function checkGamePresent() {
   firebase
