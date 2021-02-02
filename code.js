@@ -6,7 +6,6 @@ let spymaster = false;
 let male = false;
 
 let seed;
-let joined;
 
 /* 
 0  = red
@@ -751,8 +750,10 @@ function setup(seed) {
 
 function render(boardState) {
   setCardClasses(boardState, spymaster);
-  console.table(boardState);
+
   updateDatabase(seed);
+
+  console.table(boardState);
 }
 
 function getSeed() {
@@ -761,9 +762,8 @@ function getSeed() {
   if (params.has("seed")) {
     seed = params.get("seed");
     console.log("Got seed from url");
-    joined = true;
   } else if (!params.has("seed")) {
-    seed = Math.floor(Math.random() * 1000000) + 1;
+    seed = Math.floor(Math.random() * 1000000000) + 1;
     const newURL = new URL(window.location.href);
     newURL.searchParams.set("seed", seed);
     window.location.replace(newURL);
@@ -797,7 +797,7 @@ function initBoardState(seed) {
   for (i = 0; i < cards.length; i++) {
     boardState.cardValue[i] = shuffledColors[i];
   }
-  if (!joined) {
+  if (!checkGamePresent()) {
     updateDatabase(seed);
   }
 }
@@ -937,6 +937,20 @@ function shuffle(array, seed) {
 getSeed();
 setup(seed);
 render(boardState);
+
+function checkGamePresent() {
+  firebase
+    .database()
+    .ref(`games/${seed}`)
+    .once("value", (snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+        return true;
+      } else {
+        return false;
+      }
+    });
+}
 
 dbRefGames.on("value", (snap) => {
   boardState = snap.child(seed + "/boardState").val();
