@@ -953,6 +953,18 @@ setTimeout(function () {
   render(boardState);
 }, 3000);
 
+var intervalID = setInterval(function () {
+  firebase
+    .database()
+    .ref(`games/${seed}`)
+    .once("value", (snapshot) => {
+      if (snapshot.exists()) {
+        boardState = snapshot.val().boardState;
+        console.log("Syncing on interval...");
+      }
+    });
+}, 120000);
+
 function checkGamePresent() {
   firebase
     .database()
@@ -968,6 +980,9 @@ function checkGamePresent() {
 }
 
 dbRefGames.on("value", (snap) => {
-  boardState = snap.child(seed + "/boardState").val();
-  render(boardState);
+  console.log("value changed");
+  if (done) {
+    boardState = snap.child(seed + "/boardState").val();
+    render(boardState);
+  }
 });

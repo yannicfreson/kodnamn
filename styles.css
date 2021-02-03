@@ -48,6 +48,24 @@ h1 {
   margin-top: -1.5rem;
   margin-left: -0.55rem;
 }
+.header {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+}
+
+.score {
+  font-size: 7.33rem;
+  font-weight: bold;
+  margin: -1.5rem auto 0rem;
+}
+
+.scoreRed {
+  color: #c73535;
+}
+
+.scoreBlue {
+  color: #3f77da;
+}
 
 .red {
   color: #b9bbbe;
