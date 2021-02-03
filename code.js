@@ -73,6 +73,35 @@ let boardState = {
     0,
     0,
   ],
+  countedCards: [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ],
+  scoreCountRed: 0,
+  scoreCountBlue: 0,
 };
 
 let scoreRed;
@@ -750,13 +779,12 @@ function setup(seed) {
 }
 
 function render(boardState) {
-  console.log();
   setCardClasses(boardState, spymaster);
+  updateScore(boardState);
   updateDatabase(seed);
 }
 
 async function getSeed() {
-  console.log("1");
   let url = new URL(window.location.href);
   let params = new URLSearchParams(url.search);
   if (params.has("seed")) {
@@ -768,7 +796,8 @@ async function getSeed() {
       .once("value", (snapshot) => {
         if (snapshot.exists()) {
           boardState = snapshot.val().boardState;
-          console.log(boardState);
+          scoreCountRed = boardState.scoreCountRed;
+          scoreCountBlue = boardState.scoreCountBlue;
           done = true;
         }
       });
@@ -782,7 +811,6 @@ async function getSeed() {
 }
 
 function setWords(seed) {
-  console.log("2");
   let shuffledWords;
   if (language.toLowerCase() === "nederlands") {
     shuffledWords = shuffle(wordsNed, seed);
@@ -796,16 +824,22 @@ function setWords(seed) {
 }
 
 function setWhichColors(seed) {
-  console.log("3");
-  if (seed % 2 == 0) {
+  if (Math.round(seed / 100) % 2 === 0) {
     colors = colors0;
-  } else if (seed % 2 != 0) {
+    if (boardState.scoreCountBlue == 0 && boardState.scoreCountRed == 0) {
+      boardState.scoreCountRed = 9;
+      boardState.scoreCountBlue = 8;
+    }
+  } else if (Math.round(seed / 100) % 2 !== 0) {
     colors = colors1;
+    if (boardState.scoreCountBlue == 0 && boardState.scoreCountRed == 0) {
+      boardState.scoreCountRed = 8;
+      boardState.scoreCountBlue = 9;
+    }
   }
 }
 
 function initBoardState(seed) {
-  console.log("4");
   let shuffledColors = shuffle(colors, seed);
   for (i = 0; i < cards.length; i++) {
     boardState.cardValue[i] = shuffledColors[i];
@@ -821,8 +855,6 @@ function updateDatabase(seed) {
 }
 
 function setCardClasses(boardState, spymaster) {
-  console.log("5");
-  console.table(boardState);
   if (spymaster) {
     for (let i = 0; i < cards.length; i++) {
       if (boardState.cardValue[i] == 0) {
@@ -971,7 +1003,6 @@ function checkGamePresent() {
     .ref(`games/${seed}`)
     .once("value", (snapshot) => {
       if (snapshot.exists()) {
-        console.log(snapshot.val());
         return true;
       } else {
         return false;
@@ -979,8 +1010,29 @@ function checkGamePresent() {
     });
 }
 
+function updateScore(boardState) {
+  for (let i = 0; i < cards.length; i++) {
+    if (
+      boardState.cardValue[i] == 4 &&
+      boardState.guessedCards[i] == 1 &&
+      boardState.countedCards[i] == 0
+    ) {
+      boardState.scoreCountRed -= 1;
+      boardState.countedCards[i] = 1;
+    } else if (
+      boardState.cardValue[i] == 5 &&
+      boardState.guessedCards[i] == 1 &&
+      boardState.countedCards[i] == 0
+    ) {
+      boardState.scoreCountBlue -= 1;
+      boardState.countedCards[i] = 1;
+    }
+  }
+  document.getElementById("scoreRed").innerText = boardState.scoreCountRed;
+  document.getElementById("scoreBlue").innerText = boardState.scoreCountBlue;
+}
+
 dbRefGames.on("value", (snap) => {
-  console.log("value changed");
   if (done) {
     boardState = snap.child(seed + "/boardState").val();
     render(boardState);
