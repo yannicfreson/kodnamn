@@ -15,7 +15,7 @@ body {
 }
 
 .game {
-  max-width: 28rem;
+  max-width: 22rem;
   margin: 1rem auto 1rem;
 }
 
@@ -35,8 +35,8 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 0.43rem;
   cursor: pointer;
-  height: 2.85rem;
-  line-height: 2.85rem;
+  height: 2.8rem;
+  line-height: 2.8rem;
   white-space: nowrap;
   background-size: contain;
   border-radius: 0.25rem;
