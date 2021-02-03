@@ -23,7 +23,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-  gap: 0.5rem;
+  gap: 0.15rem;
 }
 
 .card {
@@ -44,7 +44,7 @@ body {
 
 h1 {
   color: #b9bbbe;
-  font-size: 2.9rem;
+  font-size: 2.92rem;
   margin: 0rem auto 0rem;
 }
 .header {
@@ -54,7 +54,7 @@ h1 {
 }
 
 .score {
-  font-size: 3rem;
+  font-size: 2.92rem;
   font-weight: bold;
   margin: 0rem auto 0rem;
 }
@@ -63,7 +63,10 @@ h1 {
   font-size: 0.43rem;
   border-radius: 0.25rem;
   border: 1px solid #000000;
-  background-color: #b9bbbe;
+  background-color: #36393f;
+  color: #b9bbbe;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
 }
 
 .scoreRed {
@@ -138,6 +141,10 @@ h1 {
     max-width: 40rem;
   }
 
+  .board {
+    gap: 0.25rem;
+  }
+
   .card {
     font-size: 0.7rem;
     height: 5rem;
@@ -145,24 +152,30 @@ h1 {
   }
 
   h1 {
-    font-size: 4.15rem;
+    font-size: 4.2rem;
   }
   .header {
     margin-top: -1.2rem;
   }
 
   .score {
-    font-size: 4.15rem;
+    font-size: 4.2rem;
   }
 
   #spySwitch {
     font-size: 0.7rem;
+    margin-top: 0.6rem;
+    padding: 0.5rem;
   }
 }
 
 @media (min-width: 1080px) {
   .game {
     max-width: 65rem;
+  }
+
+  .board {
+    gap: 0.35rem;
   }
 
   .card {
@@ -172,24 +185,30 @@ h1 {
   }
 
   h1 {
-    font-size: 6.78rem;
+    font-size: 6.8rem;
   }
   .header {
     margin-top: -1.5rem;
   }
 
   .score {
-    font-size: 6.78rem;
+    font-size: 6.8rem;
   }
 
   #spySwitch {
     font-size: 1.25rem;
+    margin-top: 0.35rem;
+    padding: 0.5rem;
   }
 }
 
 @media (min-width: 1440px) {
   .game {
     max-width: 75rem;
+  }
+
+  .board {
+    gap: 0.5rem;
   }
 
   .card {
@@ -199,17 +218,19 @@ h1 {
   }
 
   h1 {
-    font-size: 7.9rem;
+    font-size: 7.85rem;
   }
   .header {
     margin-top: -1.5rem;
   }
 
   .score {
-    font-size: 7.9rem;
+    font-size: 7.85rem;
   }
 
   #spySwitch {
     font-size: 1.45rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
   }
 }
