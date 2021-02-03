@@ -217,24 +217,28 @@ function setCardClasses(boardState, spymaster) {
         (boardState.cardValue[i] == 0 && boardState.guessedCards[i] == 1)
       ) {
         cards[i].classList.add("redDown0", "down");
+        cards[i].innerText = "";
       } else if (
         (boardState.cardValue[i] == 5 &&
           !cards[i].classList.contains("down")) ||
         (boardState.cardValue[i] == 1 && boardState.guessedCards[i] == 1)
       ) {
         cards[i].classList.add("blueDown0", "down");
+        cards[i].innerText = "";
       } else if (
         (boardState.cardValue[i] == 6 &&
           !cards[i].classList.contains("down")) ||
         (boardState.cardValue[i] == 2 && boardState.guessedCards[i] == 1)
       ) {
         cards[i].classList.add("whiteDown0", "down");
+        cards[i].innerText = "";
       } else if (
         (boardState.cardValue[i] == 7 &&
           !cards[i].classList.contains("down")) ||
         (boardState.cardValue[i] == 3 && boardState.guessedCards[i] == 1)
       ) {
         cards[i].classList.add("blackDown0", "down");
+        cards[i].innerText = "";
       }
     }
   }
@@ -247,24 +251,28 @@ function setCardClasses(boardState, spymaster) {
         (boardState.cardValue[i] == 0 && boardState.guessedCards[i] == 1)
       ) {
         cards[i].classList.add("redDown1", "down");
+        cards[i].innerText = "";
       } else if (
         (boardState.cardValue[i] == 5 &&
           !cards[i].classList.contains("down")) ||
         (boardState.cardValue[i] == 1 && boardState.guessedCards[i] == 1)
       ) {
         cards[i].classList.add("blueDown1", "down");
+        cards[i].innerText = "";
       } else if (
         (boardState.cardValue[i] == 6 &&
           !cards[i].classList.contains("down")) ||
         (boardState.cardValue[i] == 2 && boardState.guessedCards[i] == 1)
       ) {
         cards[i].classList.add("whiteDown1", "down");
+        cards[i].innerText = "";
       } else if (
         (boardState.cardValue[i] == 7 &&
           !cards[i].classList.contains("down")) ||
         (boardState.cardValue[i] == 3 && boardState.guessedCards[i] == 1)
       ) {
         cards[i].classList.add("blackDown0", "down");
+        cards[i].innerText = "";
       }
     }
   }
