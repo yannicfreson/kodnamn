@@ -27,7 +27,7 @@ body {
 }
 
 .card {
-  color: #b9bbbe;
+  color: #ffffff;
   text-align: center;
   background-color: #36393f;
   border: 1px solid #000000;
@@ -64,7 +64,7 @@ h1 {
   border-radius: 0.25rem;
   border: 1px solid #000000;
   background-color: #36393f;
-  color: #b9bbbe;
+  color: #ffffff;
   margin-top: 0.5rem;
   padding: 0.5rem;
 }
@@ -179,6 +179,7 @@ h1 {
   }
 
   .card {
+    color: #b9bbbe;
     font-size: 1.25rem;
     height: 8.3rem;
     line-height: 8.3rem;
@@ -199,6 +200,7 @@ h1 {
     font-size: 1.25rem;
     margin-top: 0.35rem;
     padding: 0.5rem;
+    color: #b9bbbe;
   }
 }
 
