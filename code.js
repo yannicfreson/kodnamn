@@ -73,6 +73,33 @@ let boardState = {
     0,
     0,
   ],
+  cardGender: [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ],
   countedCards: [
     0,
     0,
@@ -210,73 +237,47 @@ function setCardClasses(boardState, spymaster) {
     }
   }
 
-  male = Math.round(Math.random()) === 0;
-
-  if (!male) {
-    for (let i = 0; i < cards.length; i++) {
-      if (
-        (boardState.cardValue[i] == 4 &&
-          !cards[i].classList.contains("down")) ||
-        (boardState.cardValue[i] == 0 && boardState.guessedCards[i] == 1)
-      ) {
+  for (let i = 0; i < cards.length; i++) {
+    if (
+      (boardState.cardValue[i] == 4 && !cards[i].classList.contains("down")) ||
+      (boardState.cardValue[i] == 0 && boardState.guessedCards[i] == 1)
+    ) {
+      if (boardState.cardGender[i] == 1) {
         cards[i].classList.add("redDown0", "down");
-        cards[i].innerText = "";
-      } else if (
-        (boardState.cardValue[i] == 5 &&
-          !cards[i].classList.contains("down")) ||
-        (boardState.cardValue[i] == 1 && boardState.guessedCards[i] == 1)
-      ) {
-        cards[i].classList.add("blueDown0", "down");
-        cards[i].innerText = "";
-      } else if (
-        (boardState.cardValue[i] == 6 &&
-          !cards[i].classList.contains("down")) ||
-        (boardState.cardValue[i] == 2 && boardState.guessedCards[i] == 1)
-      ) {
-        cards[i].classList.add("whiteDown0", "down");
-        cards[i].innerText = "";
-      } else if (
-        (boardState.cardValue[i] == 7 &&
-          !cards[i].classList.contains("down")) ||
-        (boardState.cardValue[i] == 3 && boardState.guessedCards[i] == 1)
-      ) {
-        cards[i].classList.add("blackDown0", "down");
-        cards[i].innerText = "";
-      }
-    }
-  }
-
-  if (male) {
-    for (let i = 0; i < cards.length; i++) {
-      if (
-        (boardState.cardValue[i] == 4 &&
-          !cards[i].classList.contains("down")) ||
-        (boardState.cardValue[i] == 0 && boardState.guessedCards[i] == 1)
-      ) {
+      } else {
         cards[i].classList.add("redDown1", "down");
-        cards[i].innerText = "";
-      } else if (
-        (boardState.cardValue[i] == 5 &&
-          !cards[i].classList.contains("down")) ||
-        (boardState.cardValue[i] == 1 && boardState.guessedCards[i] == 1)
-      ) {
-        cards[i].classList.add("blueDown1", "down");
-        cards[i].innerText = "";
-      } else if (
-        (boardState.cardValue[i] == 6 &&
-          !cards[i].classList.contains("down")) ||
-        (boardState.cardValue[i] == 2 && boardState.guessedCards[i] == 1)
-      ) {
-        cards[i].classList.add("whiteDown1", "down");
-        cards[i].innerText = "";
-      } else if (
-        (boardState.cardValue[i] == 7 &&
-          !cards[i].classList.contains("down")) ||
-        (boardState.cardValue[i] == 3 && boardState.guessedCards[i] == 1)
-      ) {
-        cards[i].classList.add("blackDown0", "down");
-        cards[i].innerText = "";
       }
+      cards[i].innerText = "";
+    } else if (
+      (boardState.cardValue[i] == 5 && !cards[i].classList.contains("down")) ||
+      (boardState.cardValue[i] == 1 && boardState.guessedCards[i] == 1)
+    ) {
+      if (boardState.cardGender[i] == 1) {
+        cards[i].classList.add("blueDown0", "down");
+      } else {
+        cards[i].classList.add("blueDown1", "down");
+      }
+      cards[i].innerText = "";
+    } else if (
+      (boardState.cardValue[i] == 6 && !cards[i].classList.contains("down")) ||
+      (boardState.cardValue[i] == 2 && boardState.guessedCards[i] == 1)
+    ) {
+      if (boardState.cardGender[i] == 1) {
+        cards[i].classList.add("whiteDown0", "down");
+      } else {
+        cards[i].classList.add("whiteDown1", "down");
+      }
+      cards[i].innerText = "";
+    } else if (
+      (boardState.cardValue[i] == 7 && !cards[i].classList.contains("down")) ||
+      (boardState.cardValue[i] == 3 && boardState.guessedCards[i] == 1)
+    ) {
+      if (boardState.cardGender[i] == 1) {
+        cards[i].classList.add("blackDown0", "down");
+      } else {
+        cards[i].classList.add("blackDown1", "down");
+      }
+      cards[i].innerText = "";
     }
   }
 }
@@ -308,18 +309,40 @@ document.addEventListener("click", function (click) {
   }
 
   if (click.target.classList.contains("card")) {
+    male = Math.round(Math.random()) === 0;
+
     if (boardState.cardValue[click.target.id.substring(4)] == 0) {
       boardState.cardValue[click.target.id.substring(4)] = 4;
       boardState.guessedCards[click.target.id.substring(4)] = 1;
+      if (male) {
+        boardState.cardGender[click.target.id.substring(4)] = 1;
+      } else {
+        boardState.cardGender[click.target.id.substring(4)] = 2;
+      }
     } else if (boardState.cardValue[click.target.id.substring(4)] == 1) {
       boardState.cardValue[click.target.id.substring(4)] = 5;
       boardState.guessedCards[click.target.id.substring(4)] = 1;
+      if (male) {
+        boardState.cardGender[click.target.id.substring(4)] = 1;
+      } else {
+        boardState.cardGender[click.target.id.substring(4)] = 2;
+      }
     } else if (boardState.cardValue[click.target.id.substring(4)] == 2) {
       boardState.cardValue[click.target.id.substring(4)] = 6;
       boardState.guessedCards[click.target.id.substring(4)] = 1;
+      if (male) {
+        boardState.cardGender[click.target.id.substring(4)] = 1;
+      } else {
+        boardState.cardGender[click.target.id.substring(4)] = 2;
+      }
     } else if (boardState.cardValue[click.target.id.substring(4)] == 3) {
       boardState.cardValue[click.target.id.substring(4)] = 7;
       boardState.guessedCards[click.target.id.substring(4)] = 1;
+      if (male) {
+        boardState.cardGender[click.target.id.substring(4)] = 1;
+      } else {
+        boardState.cardGender[click.target.id.substring(4)] = 2;
+      }
     }
   }
   render(boardState);
