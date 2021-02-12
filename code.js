@@ -1,7 +1,7 @@
 const cards = document.getElementsByClassName("card");
 const dbRefGames = firebase.database().ref().child("games");
 
-let language = "nederlands";
+let language = "nl";
 let spymaster = false;
 let male = false;
 
@@ -127,6 +127,7 @@ async function getSeed() {
   let params = new URLSearchParams(url.search);
   if (params.has("seed")) {
     seed = params.get("seed");
+    language = params.get("lang");
     console.log("Got seed from url");
     firebase
       .database()
@@ -137,12 +138,14 @@ async function getSeed() {
           scoreCountRed = boardState.scoreCountRed;
           scoreCountBlue = boardState.scoreCountBlue;
           done = true;
+          document.getElementById("switchLang").style.display = "none";
         }
       });
   } else if (!params.has("seed")) {
     seed = Math.floor(Math.random() * 1000000000) + 1;
     const newURL = new URL(window.location.href);
     newURL.searchParams.set("seed", seed);
+    newURL.searchParams.set("lang", language);
     window.location.replace(newURL);
     console.log("Generated seed and changed URL");
   }
@@ -150,9 +153,9 @@ async function getSeed() {
 
 function setWords(seed) {
   let shuffledWords;
-  if (language.toLowerCase() === "nederlands") {
+  if (language.toLowerCase() === "nl") {
     shuffledWords = shuffle(wordsNed, seed);
-  } else if (language.toLowerCase() === "engels") {
+  } else if (language.toLowerCase() === "en") {
     shuffledWords = shuffle(wordsEng, seed);
   }
 
@@ -284,6 +287,24 @@ document.addEventListener("click", function (click) {
     spymaster === false
   ) {
     spymaster = !spymaster;
+  }
+
+  if (click.target == document.getElementById("switchLang")) {
+    if (language == "nl") {
+      language = "en";
+      const newURL = new URL(window.location.href);
+      newURL.searchParams.set("seed", seed);
+      newURL.searchParams.set("lang", language);
+      window.history.replaceState("page2", "Title", newURL);
+      setWords(seed);
+    } else if (language == "en") {
+      language = "nl";
+      const newURL = new URL(window.location.href);
+      newURL.searchParams.set("seed", seed);
+      newURL.searchParams.set("lang", language);
+      window.history.replaceState("page2", "Title", newURL);
+      setWords(seed);
+    }
   }
 
   if (click.target.classList.contains("card")) {

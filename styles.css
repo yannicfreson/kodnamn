@@ -59,7 +59,8 @@ h1 {
   margin: 0rem auto 0rem;
 }
 
-#spySwitch {
+#spySwitch,
+#switchLang {
   font-size: 0.43rem;
   border-radius: 0.25rem;
   border: 1px solid #000000;
@@ -162,7 +163,8 @@ h1 {
     font-size: 4.2rem;
   }
 
-  #spySwitch {
+  #spySwitch,
+  #switchLang {
     font-size: 0.7rem;
     margin-top: 0.6rem;
     padding: 0.5rem;
@@ -208,7 +210,8 @@ h1 {
     font-size: 6.8rem;
   }
 
-  #spySwitch {
+  #spySwitch,
+  #switchLang {
     font-size: 1.25rem;
     margin-top: 0.35rem;
     padding: 0.5rem;
@@ -254,7 +257,8 @@ h1 {
     font-size: 7.85rem;
   }
 
-  #spySwitch {
+  #spySwitch,
+  #switchLang {
     font-size: 1.45rem;
     margin-top: 0.5rem;
     padding: 0.5rem;
